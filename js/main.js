@@ -34,30 +34,34 @@ var shuffleArray = function (array) {
   return arr;
 };
 
-var generatesAds = function () {
+var generatesAds = function (quantity) {
   var ads = [];
 
-  for (var i = 1; i <= NUMBER_OF_ADS; i++) {
+
+  for (var i = 1; i <= quantity; i++) {
+    var locationX = getRandomNumber(MIN_COORDINAT_X, MAX_COORDINAT_X);
+    var locationY = getRandomNumber(MIN_COORDINAT_Y, MAX_COORDINAT_Y);
+
     ads.push({
       'author': {
         'avatar': 'img/avatars/user0' + i + '.png'
       },
       'offer': {
         'title': 'Предложение ' + i,
-        'address': getRandomNumber(MIN_COORDINAT_X, MAX_COORDINAT_X) + ', ' + getRandomNumber(MIN_COORDINAT_Y, MAX_COORDINAT_Y),
+        'address': locationX + ', ' + locationY,
         'price': getRandomNumber(MIN_PRICE, MAX_PRICE),
         'type': TYPES[getRandomNumber(0, TYPES.length - 1)],
         'rooms': getRandomNumber(1, ROOMS),
         'guests': getRandomNumber(1, MAX_GUESTS),
         'checkin': TIMES[getRandomNumber(0, TIMES.length - 1)],
         'checkout': TIMES[getRandomNumber(0, TIMES.length - 1)],
-        'features': shuffleArray(SERVICES),
+        'features': shuffleArray(SERVICES).slice(0, getRandomNumber(1, SERVICES.length)),
         'description': 'Описание' + i,
         'photos': shuffleArray(PHOTOS).slice(0, getRandomNumber(1, PHOTOS.length)),
       },
       'location': {
-        'x': getRandomNumber(MIN_COORDINAT_X, MAX_COORDINAT_X),
-        'y': getRandomNumber(MIN_COORDINAT_Y, MAX_COORDINAT_Y)
+        'x': locationX,
+        'y': locationY
       }
     });
   }
@@ -80,7 +84,7 @@ var renderMapPin = function (ad) {
 };
 
 var drawAd = function () {
-  var ads = generatesAds();
+  var ads = generatesAds(NUMBER_OF_ADS);
   var fragment = document.createDocumentFragment();
   var mapPinsElement = document.querySelector('.map__pins');
   for (var i = 0; i < ads.length; i++) {
