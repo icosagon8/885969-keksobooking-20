@@ -96,26 +96,22 @@ drawAd();
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-var MAP_TYPES = {
-  'palace': 'Дворец',
-  'flat': 'Квартира',
-  'house': 'Дом',
-  'bungalo': 'Бунгало'
+var MapTypes = {
+  PALACE: 'Дворец',
+  FLAT: 'Квартира',
+  HOUSE: 'Дом',
+  BUNGALO: 'Бунгало'
 };
 
-var removeElementMod = function (features, classCore, element) {
-  var modifier = element.querySelectorAll('.' + classCore);
-  for (var j = 0; j < modifier.length; j++) {
-    for (var i = 0; i < features.length; i++) {
-      if (modifier[j].classList.contains(classCore + '--' + features[i])) {
-        break;
-      } else if (!(modifier[j].classList.contains(classCore + '--' + features[i])) && !(features[i] === features[features.length - 1])) {
-        continue;
-      } else {
-        modifier[j].parentNode.removeChild(modifier[j]);
-      }
-    }
+var addFeatures = function (features, element) {
+  var featureList = element.querySelector('.popup__features');
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < features.length; i++) {
+    var cardFeatureElement = element.querySelector('.popup__feature--' + features[i]).cloneNode();
+    fragment.append(cardFeatureElement);
   }
+  featureList.innerHTML = '';
+  featureList.append(fragment);
 };
 
 var renderMapCard = function (ad) {
@@ -124,10 +120,10 @@ var renderMapCard = function (ad) {
   cardElement.querySelector('.popup__title').textContent = ad.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = ad.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = MAP_TYPES[ad.offer.type];
+  cardElement.querySelector('.popup__type').textContent = MapTypes[ad.offer.type.toUpperCase()];
   cardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
-  removeElementMod(ad.offer.features, 'popup__feature', cardElement);
+  addFeatures(ad.offer.features, cardElement);
   cardElement.querySelector('.popup__description').textContent = ad.offer.description;
   cardElement.querySelector('.popup__photo').src = ad.offer.photos[0];
   if (ad.offer.photos.length > 1) {
