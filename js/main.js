@@ -15,6 +15,7 @@ var SERVICES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAP_PIN_WIDTH = 50;
 var MAP_PIN_HEIGHT = 70;
+var MAP_PIN_MAIN_ANGLE_HEIGHT = 15;
 
 var getRandomNumber = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -67,7 +68,6 @@ var generatesAds = function (quantity) {
 };
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
 
 var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -91,8 +91,6 @@ var drawAd = function () {
   }
   mapPinsElement.appendChild(fragment);
 };
-
-drawAd();
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
@@ -138,4 +136,87 @@ var renderMapCard = function (ad) {
   return fragment;
 };
 
-document.querySelector('.map').insertBefore(renderMapCard(ads[0]), document.querySelector('.map__filters-container'));
+// Добавил пока вместо отрисовки карточки вызов функции, чтобы ESLint и Travis не ругались.
+renderMapCard(ads[0]);
+// document.querySelector('.map').insertBefore(renderMapCard(ads[0]), document.querySelector('.map__filters-container'));
+
+var adForm = document.querySelector('.ad-form');
+var adFormFieldset = adForm.querySelectorAll('fieldset');
+
+var switchDisabled = function (elements, bool) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = bool;
+  }
+};
+
+switchDisabled(adFormFieldset, true);
+
+var mapFilters = map.querySelector('.map__filters');
+var mapFiltersSelect = mapFilters.querySelectorAll('select');
+
+switchDisabled(mapFiltersSelect, true);
+
+var mapFiltersFieldset = mapFilters.querySelectorAll('fieldset');
+
+switchDisabled(mapFiltersFieldset, true);
+
+var mapPinMain = map.querySelector('.map__pin--main');
+var addressField = adForm.querySelector('#address');
+
+var coordinateX = mapPinMain.offsetLeft + mapPinMain.offsetWidth / 2;
+var coordinateY = mapPinMain.offsetTop + mapPinMain.offsetHeight / 2;
+
+var outputsCoordinate = function () {
+  var coordinate = Math.round(coordinateX) + ', ' + Math.round(coordinateY);
+  addressField.value = coordinate;
+};
+
+outputsCoordinate();
+
+var roomNumber = adForm.querySelector('#room_number');
+var capacity = adForm.querySelector('#capacity');
+var submitButton = adForm.querySelector('.ad-form__submit');
+
+var validatesForm = function (element, eventType) {
+  element.addEventListener(eventType, function () {
+    if ((+roomNumber.value !== 100) && (+capacity.value === 0)) {
+      capacity.setCustomValidity('Выберите хотя бы 1 гостя');
+    } else if ((+roomNumber.value === 100) && (+capacity.value !== 0)) {
+      capacity.setCustomValidity('Комнаты не для гостей!');
+    } else if (+roomNumber.value < +capacity.value) {
+      capacity.setCustomValidity('Слишком много гостей!');
+    } else {
+      capacity.setCustomValidity('');
+    }
+  });
+};
+
+var activatesPage = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  switchDisabled(adFormFieldset, false);
+  switchDisabled(mapFiltersSelect, false);
+  switchDisabled(mapFiltersFieldset, false);
+  addressField.disabled = true;
+  coordinateY = mapPinMain.offsetTop + mapPinMain.offsetHeight + MAP_PIN_MAIN_ANGLE_HEIGHT;
+  outputsCoordinate();
+  drawAd();
+  validatesForm(roomNumber, 'change');
+  validatesForm(capacity, 'change');
+  validatesForm(submitButton, 'click');
+  mapPinMain.removeEventListener('mousedown', onMapPinMainMouseClick);
+};
+
+var onMapPinMainMouseClick = function (evt) {
+  if (evt.button === 0) {
+    activatesPage();
+  }
+};
+
+mapPinMain.addEventListener('mousedown', onMapPinMainMouseClick);
+
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    activatesPage();
+  }
+});
