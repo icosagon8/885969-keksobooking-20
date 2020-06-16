@@ -250,7 +250,6 @@ var activatesPage = function () {
   switchDisabled(adFormFieldset, false);
   switchDisabled(mapFiltersSelect, false);
   switchDisabled(mapFiltersFieldset, false);
-  addressField.disabled = true;
   coordinateY = mapPinMain.offsetTop + mapPinMain.offsetHeight + MAP_PIN_MAIN_ANGLE_HEIGHT;
   outputsCoordinate();
   drawAd();
