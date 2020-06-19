@@ -24,12 +24,12 @@
   var coordinateX = mapPinMain.offsetLeft + mapPinMain.offsetWidth / 2;
   var coordinateY = mapPinMain.offsetTop + mapPinMain.offsetHeight / 2;
 
-  var outputsCoordinate = function () {
-    var coordinate = Math.round(coordinateX) + ', ' + Math.round(coordinateY);
+  var outputsCoordinate = function (ordinate, abscissa) {
+    var coordinate = Math.round(ordinate) + ', ' + Math.round(abscissa);
     addressField.value = coordinate;
   };
 
-  outputsCoordinate();
+  outputsCoordinate(coordinateX, coordinateY);
 
   var roomNumber = adForm.querySelector('#room_number');
   var capacity = adForm.querySelector('#capacity');
@@ -68,6 +68,7 @@
     adFormFieldset: adFormFieldset,
     mapFiltersSelect: mapFiltersSelect,
     mapFiltersFieldset: mapFiltersFieldset,
+    coordinateX: coordinateX,
     coordinateY: coordinateY,
     mapPinMain: mapPinMain,
     roomNumber: roomNumber,
