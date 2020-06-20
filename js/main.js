@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-  var MAP_PIN_MAIN_ANGLE_HEIGHT = 15;
   var switchDisabled = window.util.switchDisabled;
 
   var activatesPage = function () {
@@ -9,8 +8,7 @@
     switchDisabled(window.form.adFormFieldset, false);
     switchDisabled(window.form.mapFiltersSelect, false);
     switchDisabled(window.form.mapFiltersFieldset, false);
-    var coordinateY = window.form.mapPinMain.offsetTop + window.form.mapPinMain.offsetHeight + MAP_PIN_MAIN_ANGLE_HEIGHT;
-    window.form.outputsCoordinate(window.form.coordinateX, coordinateY);
+    window.form.outputsCoordinate(window.form.coordinateX, window.form.coordinateY);
     window.map.drawAd();
     var mapPins = window.map.mapPinsElement.querySelectorAll('button:not(.map__pin--main)');
 
