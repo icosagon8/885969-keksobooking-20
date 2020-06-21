@@ -48,6 +48,10 @@
   };
 
   window.data = {
-    generatesAds: generatesAds
+    generatesAds: generatesAds,
+    MIN_COORDINAT_X: MIN_COORDINAT_X,
+    MAX_COORDINAT_X: MAX_COORDINAT_X,
+    MIN_COORDINAT_Y: MIN_COORDINAT_Y,
+    MAX_COORDINAT_Y: MAX_COORDINAT_Y
   };
 })();

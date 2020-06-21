@@ -2,6 +2,7 @@
 (function () {
   var MIN_GUESTS = 0;
   var MAX_ROOMS_NUMBER = 100;
+  var MAP_PIN_MAIN_ANGLE_HEIGHT = 15;
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
   var switchDisabled = window.util.switchDisabled;
@@ -30,6 +31,9 @@
   };
 
   outputsCoordinate(coordinateX, coordinateY);
+
+  var mapPinMainHeight = mapPinMain.offsetHeight + MAP_PIN_MAIN_ANGLE_HEIGHT;
+  coordinateY = mapPinMain.offsetTop + mapPinMainHeight;
 
   var roomNumber = adForm.querySelector('#room_number');
   var capacity = adForm.querySelector('#capacity');
@@ -72,6 +76,8 @@
     coordinateY: coordinateY,
     mapPinMain: mapPinMain,
     roomNumber: roomNumber,
-    capacity: capacity
+    capacity: capacity,
+    MAP_PIN_MAIN_ANGLE_HEIGHT: MAP_PIN_MAIN_ANGLE_HEIGHT,
+    mapPinMainHeight: mapPinMainHeight
   };
 })();
