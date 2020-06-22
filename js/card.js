@@ -43,8 +43,8 @@
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
     addFeatures(ad.offer.features, cardElement);
     cardElement.querySelector('.popup__description').textContent = ad.offer.description;
-    cardElement.querySelector('.popup__photo').src = ad.offer.photos[0];
-    if (ad.offer.photos.length > 1) {
+    if (ad.offer.photos.length >= 1) {
+      cardElement.querySelector('.popup__photo').src = ad.offer.photos[0];
       for (var i = 1; i < ad.offer.photos.length; i++) {
         var cardImgElement = cardTemplate.querySelector('.popup__photo').cloneNode();
         cardImgElement.src = ad.offer.photos[i];
