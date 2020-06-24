@@ -1,11 +1,12 @@
 'use strict';
 (function () {
   var TIMEOUT_IN_MS = 10000;
+  var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
   var StatusCode = {
     OK: 200
   };
 
-  var connectsToServer = function (load, error, method, URL, info) {
+  var connectsToServer = function (load, error, method, URL, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -24,11 +25,11 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
     xhr.open(method, URL);
-    xhr.send(info);
+    xhr.send(data);
   };
 
   var load = function (onLoad, onError) {
-    connectsToServer(onLoad, onError, 'GET', 'https://javascript.pages.academy/keksobooking/data');
+    connectsToServer(onLoad, onError, 'GET', URL_LOAD);
   };
 
   window.backend = {
