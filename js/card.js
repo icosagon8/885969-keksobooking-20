@@ -49,18 +49,18 @@
   };
 
   var addAvatar = function (avatar, element) {
+    element.src = 'img/avatars/default.png';
     if (avatar) {
       element.src = avatar;
-    } else {
-      element.src = 'img/avatars/default.png';
     }
   };
 
   var addTextContent = function (text, element) {
+    var popupDescription = element.querySelector('.popup__description');
     if (text) {
-      element.querySelector('.popup__description').textContent = text;
+      popupDescription.textContent = text;
     } else {
-      element.querySelector('.popup__description').remove();
+      popupDescription.remove();
     }
   };
 
