@@ -63,6 +63,56 @@
     });
   };
 
+  var a = function (result, where, handler) {
+    var Template = document.querySelector('#' + result).content.querySelector('.' + result);
+    var Element = Template.cloneNode(true);
+    document.querySelector(where).insertAdjacentElement('afterbegin', Element);
+    document.addEventListener('keydown', handler);
+    document.addEventListener('mousedown', handler);
+    if (result === 'success') {
+      window.main.deactivatesPage();
+    }
+  };
+
+  var successHandler = function () {
+    a('success', 'body', onSuccessMessageClickOrEscPress);
+    window.map.closePopup();
+  };
+
+  var errorHandler = function () {
+    a('error', 'main', onErrorMessageClickOrEscPress);
+    window.map.closePopup();
+  };
+
+  // Две функции ниже хотел объединить, но не получилось
+
+  var onSuccessMessageClickOrEscPress = function (evt) {
+    if ((evt.key === 'Escape') || (evt.button === 0)) {
+      evt.preventDefault();
+      var success = document.querySelector('.success');
+      success.remove();
+      document.removeEventListener('keydown', onSuccessMessageClickOrEscPress);
+      document.removeEventListener('mousedown', onSuccessMessageClickOrEscPress);
+    }
+  };
+
+  var onErrorMessageClickOrEscPress = function (evt) {
+    if ((evt.key === 'Escape') || (evt.button === 0)) {
+      evt.preventDefault();
+      var error = document.querySelector('.error');
+      error.remove();
+      document.removeEventListener('keydown', onErrorMessageClickOrEscPress);
+      document.removeEventListener('mousedown', onErrorMessageClickOrEscPress);
+    }
+  };
+
+  var submitHandler = function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(adForm), successHandler, errorHandler);
+  };
+
+  adForm.addEventListener('submit', submitHandler);
+
   window.form = {
     validatesForm: validatesForm,
     synchronizesTimes: synchronizesTimes,
