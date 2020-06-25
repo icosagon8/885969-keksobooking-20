@@ -1,13 +1,20 @@
 'use strict';
 (function () {
-  var NUMBER_OF_ADS = 8;
-  var ads = window.data.generatesAds(NUMBER_OF_ADS);
+  var NUMBER_OF_ADS = 5;
   var mapPinsElement = document.querySelector('.map__pins');
 
-  var drawAd = function () {
+  var onMapPinClick = function (mapPin, ad) {
+    mapPin.addEventListener('click', function () {
+      openPopup(ad);
+    });
+  };
+
+  var successHandler = function (ads) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < ads.length; i++) {
-      fragment.appendChild(window.pin.renderMapPin(ads[i]));
+    for (var i = 0; i < NUMBER_OF_ADS; i++) {
+      var mapPin = window.pin.renderMapPin(ads[i]);
+      onMapPinClick(mapPin, ads[i]);
+      fragment.appendChild(mapPin);
     }
     mapPinsElement.appendChild(fragment);
   };
@@ -37,9 +44,7 @@
   };
 
   window.map = {
-    drawAd: drawAd,
-    mapPinsElement: mapPinsElement,
-    ads: ads,
+    successHandler: successHandler,
     openPopup: openPopup,
     onPopupEscPress: onPopupEscPress,
     closePopup: closePopup

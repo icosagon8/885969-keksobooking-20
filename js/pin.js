@@ -10,7 +10,7 @@
     mapPinElement.style.left = ad.location.x - MAP_PIN_WIDTH / 2 + 'px';
     mapPinElement.style.top = ad.location.y - MAP_PIN_HEIGHT + 'px';
     var mapPinImg = mapPinElement.querySelector('img');
-    mapPinImg.src = ad.author.avatar;
+    window.card.addAvatar(ad.author.avatar, mapPinImg);
     mapPinImg.alt = ad.offer.title;
     return mapPinElement;
   };
@@ -19,3 +19,5 @@
     renderMapPin: renderMapPin
   };
 })();
+
+
