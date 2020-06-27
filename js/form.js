@@ -2,7 +2,9 @@
 (function () {
   var MIN_GUESTS = 0;
   var MAX_ROOMS_NUMBER = 100;
-  var MAP_PIN_MAIN_ANGLE_HEIGHT = 15;
+  var COORD_X = 603;
+  var COORD_Y = 408;
+  var COORD_Y_ACTIVE = 455;
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
   var switchDisabled = window.util.switchDisabled;
@@ -21,9 +23,8 @@
 
   var mapPinMain = map.querySelector('.map__pin--main');
   var addressField = adForm.querySelector('#address');
-
-  var coordinateX = mapPinMain.offsetLeft + mapPinMain.offsetWidth / 2;
-  var coordinateY = mapPinMain.offsetTop + mapPinMain.offsetHeight / 2;
+  var coordinateX = COORD_X;
+  var coordinateY = COORD_Y;
 
   var outputsCoordinate = function (ordinate, abscissa) {
     var coordinate = Math.round(ordinate) + ', ' + Math.round(abscissa);
@@ -32,8 +33,7 @@
 
   outputsCoordinate(coordinateX, coordinateY);
 
-  var mapPinMainHeight = mapPinMain.offsetHeight + MAP_PIN_MAIN_ANGLE_HEIGHT;
-  coordinateY = mapPinMain.offsetTop + mapPinMainHeight;
+  coordinateY = COORD_Y_ACTIVE;
 
   var roomNumber = adForm.querySelector('#room_number');
   var capacity = adForm.querySelector('#capacity');
@@ -63,10 +63,10 @@
     });
   };
 
-  var a = function (result, where, handler) {
-    var Template = document.querySelector('#' + result).content.querySelector('.' + result);
-    var Element = Template.cloneNode(true);
-    document.querySelector(where).insertAdjacentElement('afterbegin', Element);
+  var insertsInfoMessage = function (result, where, handler) {
+    var template = document.querySelector('#' + result).content.querySelector('.' + result);
+    var element = template.cloneNode(true);
+    document.querySelector(where).insertAdjacentElement('afterbegin', element);
     document.addEventListener('keydown', handler);
     document.addEventListener('mousedown', handler);
     if (result === 'success') {
@@ -75,16 +75,14 @@
   };
 
   var successHandler = function () {
-    a('success', 'body', onSuccessMessageClickOrEscPress);
+    insertsInfoMessage('success', 'body', onSuccessMessageClickOrEscPress);
     window.map.closePopup();
   };
 
   var errorHandler = function () {
-    a('error', 'main', onErrorMessageClickOrEscPress);
+    insertsInfoMessage('error', 'main', onErrorMessageClickOrEscPress);
     window.map.closePopup();
   };
-
-  // Две функции ниже хотел объединить, но не получилось
 
   var onSuccessMessageClickOrEscPress = function (evt) {
     if ((evt.key === 'Escape') || (evt.button === 0)) {
@@ -111,7 +109,11 @@
     window.backend.save(new FormData(adForm), successHandler, errorHandler);
   };
 
-  adForm.addEventListener('submit', submitHandler);
+  var formReset = adForm.querySelector('.ad-form__reset');
+
+  var onResetClick = function () {
+    window.main.deactivatesPage();
+  };
 
   window.form = {
     validatesForm: validatesForm,
@@ -127,7 +129,12 @@
     mapPinMain: mapPinMain,
     roomNumber: roomNumber,
     capacity: capacity,
-    MAP_PIN_MAIN_ANGLE_HEIGHT: MAP_PIN_MAIN_ANGLE_HEIGHT,
-    mapPinMainHeight: mapPinMainHeight
+    COORD_X: COORD_X,
+    COORD_Y: COORD_Y,
+    COORD_Y_ACTIVE: COORD_Y_ACTIVE,
+    onResetClick: onResetClick,
+    submitHandler: submitHandler,
+    formReset: formReset
+
   };
 })();

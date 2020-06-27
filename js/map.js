@@ -39,7 +39,9 @@
 
   var closePopup = function () {
     var popup = window.form.map.querySelector('.popup');
-    popup.remove();
+    if (popup) {
+      popup.remove();
+    }
     document.removeEventListener('keydown', onPopupEscPress);
   };
 

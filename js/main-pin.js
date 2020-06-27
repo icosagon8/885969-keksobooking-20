@@ -4,7 +4,9 @@
   var MAX_COORDINAT_X = 1200;
   var MIN_COORDINAT_Y = 130;
   var MAX_COORDINAT_Y = 630;
+  var MAP_PIN_MAIN_ANGLE_HEIGHT = 15;
   var mapPinMain = window.form.mapPinMain;
+  var mapPinMainHeight = mapPinMain.offsetHeight + MAP_PIN_MAIN_ANGLE_HEIGHT;
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -38,7 +40,7 @@
 
       var holdsMapPinMainOnY = function (y) {
         window.form.coordinateY = y;
-        mapPinMain.style.top = (y - window.form.mapPinMainHeight) + 'px';
+        mapPinMain.style.top = (y - mapPinMainHeight) + 'px';
       };
 
       if (mapPinMain.offsetLeft <= MIN_COORDINAT_X - mapPinMain.offsetWidth / 2) {
@@ -49,9 +51,9 @@
 
       window.form.coordinateY -= shift.y;
 
-      if (mapPinMain.offsetTop <= MIN_COORDINAT_Y - window.form.mapPinMainHeight) {
+      if (mapPinMain.offsetTop <= MIN_COORDINAT_Y - mapPinMainHeight) {
         holdsMapPinMainOnY(MIN_COORDINAT_Y);
-      } else if (mapPinMain.offsetTop >= MAX_COORDINAT_Y - window.form.mapPinMainHeight) {
+      } else if (mapPinMain.offsetTop >= MAX_COORDINAT_Y - mapPinMainHeight) {
         holdsMapPinMainOnY(MAX_COORDINAT_Y);
       }
 
@@ -60,7 +62,6 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      window.form.outputsCoordinate(window.form.coordinateX, window.form.coordinateY);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
