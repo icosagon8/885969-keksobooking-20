@@ -2,6 +2,7 @@
 (function () {
   var TIMEOUT_IN_MS = 10000;
   var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
+  var URL_SAVE = 'https://javascript.pages.academy/keksobooking';
   var StatusCode = {
     OK: 200
   };
@@ -32,7 +33,12 @@
     connectsToServer(onLoad, onError, 'GET', URL_LOAD);
   };
 
+  var save = function (data, onLoad, onError) {
+    connectsToServer(onLoad, onError, 'POST', URL_SAVE, data);
+  };
+
   window.backend = {
-    load: load
+    load: load,
+    save: save
   };
 })();
