@@ -19,6 +19,7 @@
     window.form.validatesForm(window.form.capacity);
     window.form.mapPinMain.removeEventListener('mousedown', onMapPinMainClickOrPress);
     window.form.mapPinMain.removeEventListener('keydown', onMapPinMainClickOrPress);
+    window.map.mapFilters.reset();
     window.form.synchronizesTimes();
     var type = window.form.adForm.querySelector('#type');
     var price = window.form.adForm.querySelector('#price');
@@ -28,7 +29,7 @@
     });
     window.form.adForm.addEventListener('submit', window.form.submitHandler);
     window.form.formReset.addEventListener('click', window.form.onResetClick);
-    window.map.housingType.addEventListener('change', window.map.onHousingTypeClick);
+    window.map.mapFilters.addEventListener('change', window.map.onFiltersChange);
   };
 
   var deactivatesPage = function () {
@@ -48,7 +49,7 @@
     mapPinMain.style.left = START_LEFT;
     window.form.adForm.removeEventListener('submit', window.form.submitHandler);
     window.form.formReset.removeEventListener('click', window.form.onResetClick);
-    window.map.housingType.removeEventListener('change', window.map.onHousingTypeClick);
+    window.map.mapFilters.removeEventListener('change', window.map.onFiltersChange);
   };
 
   var onMapPinMainClickOrPress = function (evt) {
