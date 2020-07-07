@@ -30,6 +30,8 @@
     window.form.adForm.addEventListener('submit', window.form.submitHandler);
     window.form.formReset.addEventListener('click', window.form.onResetClick);
     window.map.mapFilters.addEventListener('change', window.map.onFiltersChange);
+    window.photoUploader.previewChooser.addEventListener('change', window.photoUploader.onPreviewChooserChange);
+    window.photoUploader.housingPhotoChooser.addEventListener('change', window.photoUploader.onHousingPhotoChooserChange);
   };
 
   var deactivatesPage = function () {
@@ -50,6 +52,10 @@
     window.form.adForm.removeEventListener('submit', window.form.submitHandler);
     window.form.formReset.removeEventListener('click', window.form.onResetClick);
     window.map.mapFilters.removeEventListener('change', window.map.onFiltersChange);
+    window.photoUploader.previewChooser.removeEventListener('change', window.photoUploader.onPreviewChooserChange);
+    window.photoUploader.housingPhotoChooser.removeEventListener('change', window.photoUploader.onHousingPhotoChooserChange);
+    window.photoUploader.preview.src = 'img/muffin-grey.svg';
+    window.photoUploader.removeImage();
   };
 
   var onMapPinMainClickOrPress = function (evt) {
