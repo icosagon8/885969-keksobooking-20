@@ -75,7 +75,7 @@
   };
 
   var successHandler = function () {
-    insertsInfoMessage('success', 'body', onSuccessMessageClickOrEscPress);
+    insertsInfoMessage('success', 'main', onSuccessMessageClickOrEscPress);
     window.map.closePopup();
   };
 
@@ -104,7 +104,7 @@
     }
   };
 
-  var submitHandler = function (evt) {
+  var onSubmitClick = function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(adForm), successHandler, errorHandler);
   };
@@ -113,6 +113,7 @@
 
   var onResetClick = function () {
     window.main.deactivatesPage();
+    window.map.closePopup();
   };
 
   window.form = {
@@ -133,7 +134,7 @@
     COORD_Y: COORD_Y,
     COORD_Y_ACTIVE: COORD_Y_ACTIVE,
     onResetClick: onResetClick,
-    submitHandler: submitHandler,
+    onSubmitClick: onSubmitClick,
     formReset: formReset
 
   };

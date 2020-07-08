@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var MapTypes = {
+  var HousingMap = {
     PALACE: {
       'type': 'Дворец',
       'price': 10000
@@ -72,7 +72,7 @@
     cardElement.querySelector('.popup__title').textContent = ad.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = ad.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
-    cardElement.querySelector('.popup__type').textContent = MapTypes[ad.offer.type.toUpperCase()].type;
+    cardElement.querySelector('.popup__type').textContent = HousingMap[ad.offer.type.toUpperCase()].type;
     cardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
     addFeatures(ad.offer.features, cardElement);
@@ -91,7 +91,7 @@
 
   window.card = {
     renderMapCard: renderMapCard,
-    MapTypes: MapTypes,
+    HousingMap: HousingMap,
     addAvatar: addAvatar
   };
 })();

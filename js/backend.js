@@ -7,7 +7,7 @@
     OK: 200
   };
 
-  var connectsToServer = function (load, error, method, URL, data) {
+  var connectsToServer = function (load, error, method, url, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -25,7 +25,7 @@
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
-    xhr.open(method, URL);
+    xhr.open(method, url);
     xhr.send(data);
   };
 

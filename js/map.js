@@ -3,23 +3,32 @@
   var NUMBER_OF_ADS = 5;
   var MIN_PRICE = 10000;
   var MAX_PRICE = 50000;
-  var mapPinsElement = document.querySelector('.map__pins');
+  var mapPins = document.querySelector('.map__pins');
 
   var onMapPinClick = function (mapPin, ad) {
     mapPin.addEventListener('click', function () {
-      openPopup(ad);
+      openPopup(mapPin, ad);
     });
   };
 
   var mapFiltersContainer = document.querySelector('.map__filters-container');
 
-  var openPopup = function (ad) {
+  var removeMapPinActiveClass = function () {
+    var mapPinActive = document.querySelector('.map__pin--active');
+    if (mapPinActive) {
+      mapPinActive.classList.remove('map__pin--active');
+    }
+  };
+
+  var openPopup = function (mapPin, ad) {
     var popup = window.form.map.querySelector('.popup');
     if (popup !== null) {
       popup.remove();
+      removeMapPinActiveClass();
     }
     window.form.map.insertBefore(window.card.renderMapCard(ad), mapFiltersContainer);
     document.addEventListener('keydown', onPopupEscPress);
+    mapPin.classList.add('map__pin--active');
   };
 
   var onPopupEscPress = function (evt) {
@@ -31,6 +40,7 @@
 
   var closePopup = function () {
     var popup = window.form.map.querySelector('.popup');
+    removeMapPinActiveClass();
     if (popup) {
       popup.remove();
     }
@@ -87,10 +97,10 @@
   };
   var getFeaturesFlag = function (ad) {
     var checkedFeatures = housingFeatures.querySelectorAll('input:checked');
-    var checkedFeaturesArray = [];
+    var checkedFeaturesValues = [];
     var isFeatures = true;
     checkedFeatures.forEach(function (checkedFeature) {
-      checkedFeaturesArray.push(checkedFeature.value);
+      checkedFeaturesValues.push(checkedFeature.value);
       isFeatures = isFeatures && ad.offer.features.includes(checkedFeature.value);
     });
     return isFeatures;
@@ -108,7 +118,7 @@
       onMapPinClick(mapPin, filteredAds[i]);
       fragment.appendChild(mapPin);
     }
-    mapPinsElement.appendChild(fragment);
+    mapPins.appendChild(fragment);
   };
 
   var successHandler = function (ads) {
