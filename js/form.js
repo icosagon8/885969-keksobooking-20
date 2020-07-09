@@ -27,8 +27,7 @@
   var coordinateY = COORD_Y;
 
   var outputsCoordinate = function (ordinate, abscissa) {
-    var coordinate = Math.round(ordinate) + ', ' + Math.round(abscissa);
-    addressField.value = coordinate;
+    addressField.value = Math.round(ordinate) + ', ' + Math.round(abscissa);
   };
 
   outputsCoordinate(coordinateX, coordinateY);

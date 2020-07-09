@@ -97,10 +97,8 @@
   };
   var getFeaturesFlag = function (ad) {
     var checkedFeatures = housingFeatures.querySelectorAll('input:checked');
-    var checkedFeaturesValues = [];
     var isFeatures = true;
     checkedFeatures.forEach(function (checkedFeature) {
-      checkedFeaturesValues.push(checkedFeature.value);
       isFeatures = isFeatures && ad.offer.features.includes(checkedFeature.value);
     });
     return isFeatures;

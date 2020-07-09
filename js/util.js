@@ -29,8 +29,8 @@
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: rgba(245, 64, 64, 0.8); color: #ffffff; padding: 30px 10px; width: 900px; border: 2px solid red;';
     node.style.position = 'fixed';
     node.style.top = '30%';
-    node.style.left = 0;
-    node.style.right = 0;
+    node.style.left = '0';
+    node.style.right = '0';
     node.style.fontSize = '30px';
 
     node.textContent = errorMessage;
